@@ -7,7 +7,8 @@
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" id="tab-favicon" href="/assets/media/favicon/thesaurus.png" />
-  <title id="page-title">Synonyms and Antonyms of Words | Thesaurus.com</title>
+  <meta name="description" content="A calmer corner of the internet. Search, play, and explore with SKlite." />
+  <title id="page-title">SKlite — Home</title>
   <link rel="stylesheet" href="/assets/css/global.css" />
   <link rel="stylesheet" href="/assets/css/home.css" />
   <link rel="stylesheet" href="/assets/css/nav.css" />
@@ -16,25 +17,84 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body class="center" onload="SplashT">
+<body class="center hero-shell">
   <div class="nav-bar"></div>
-  <div class="main">
-    <h1 class="title"></h1>
-    <p id="splash"></p>
-    <div class="search-container">
-      <form id="search-form" method="POST">
-        <input id="input" class="truncate" placeholder="Search or enter a URL" type="text" />
-      </form>
+  <svg class="orbit-art" viewBox="0 0 1440 900" aria-hidden="true" focusable="false">
+    <g class="orbit-lines">
+      <path d="M1050 160 1118 112 1184 164 1145 236 1050 160 1080 226 1184 164" />
+      <path d="M250 648 312 594 374 640 350 724 250 648 278 714 350 724" />
+      <path d="M1280 565 1334 520 1380 575 1340 642 1280 565 1294 630 1340 642" />
+    </g>
+    <g class="orbit-stars">
+      <circle cx="1050" cy="160" r="2.5" /><circle cx="1118" cy="112" r="2.5" />
+      <circle cx="1184" cy="164" r="2.5" /><circle cx="1145" cy="236" r="2.5" />
+      <circle cx="1080" cy="226" r="2" /><circle cx="250" cy="648" r="2.5" />
+      <circle cx="312" cy="594" r="2.5" /><circle cx="374" cy="640" r="2.5" />
+      <circle cx="350" cy="724" r="2.5" /><circle cx="278" cy="714" r="2" />
+      <circle cx="1280" cy="565" r="2.5" /><circle cx="1334" cy="520" r="2.5" />
+      <circle cx="1380" cy="575" r="2.5" /><circle cx="1340" cy="642" r="2.5" />
+      <circle cx="1294" cy="630" r="2" />
+    </g>
+  </svg>
+  <main class="main hero-panel">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="eyebrow-spark" aria-hidden="true"></span>Your space on the web</p>
+      <h1 class="title">Make room<br /><span>to explore.</span></h1>
+      <p class="subtitle">A little less noise. A lot more internet.</p>
     </div>
-  </div>
+
+    <div class="search-container">
+      <form id="search-form" method="POST" role="search">
+        <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+        <input id="input" class="truncate" placeholder="Search the web or enter an address" type="text"
+          aria-label="Search the web or enter an address" autocomplete="off" />
+        <button class="search-submit" type="submit" aria-label="Search">
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </button>
+      </form>
+      <span class="search-hint"><kbd>↵</kbd> to explore</span>
+    </div>
+
+    <section class="launch-section" aria-labelledby="launch-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Your shortcuts</p>
+          <h2 id="launch-title">Pick a direction</h2>
+        </div>
+        <span class="section-note">The good stuff, close by</span>
+      </div>
+      <nav class="quick-links" aria-label="Quick access">
+      <a class="quick-link" href="/apps">
+        <span class="link-icon apps-icon"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span>
+        <span class="link-copy"><strong>Apps</strong><small>Everyday favorites</small></span>
+        <i class="fa-solid fa-arrow-up-right-from-square link-arrow" aria-hidden="true"></i>
+      </a>
+      <a class="quick-link" href="/games">
+        <span class="link-icon games-icon"><i class="fa-solid fa-gamepad" aria-hidden="true"></i></span>
+        <span class="link-copy"><strong>Games</strong><small>Take a quick break</small></span>
+        <i class="fa-solid fa-arrow-up-right-from-square link-arrow" aria-hidden="true"></i>
+      </a>
+      <a class="quick-link" href="/tabs">
+        <span class="link-icon tabs-icon"><i class="fa-solid fa-window-maximize" aria-hidden="true"></i></span>
+        <span class="link-copy"><strong>Browse</strong><small>Open a fresh tab</small></span>
+        <i class="fa-solid fa-arrow-up-right-from-square link-arrow" aria-hidden="true"></i>
+      </a>
+      <a class="quick-link" href="/chat">
+        <span class="link-icon chat-icon"><i class="fa-solid fa-comments" aria-hidden="true"></i></span>
+        <span class="link-copy"><strong>Community</strong><small>Come say hello</small></span>
+        <i class="fa-solid fa-arrow-up-right-from-square link-arrow" aria-hidden="true"></i>
+      </a>
+      </nav>
+    </section>
+    <a class="settings-link" href="/settings"><i class="fa-solid fa-sliders" aria-hidden="true"></i> Make it yours</a>
+  </main>
   <script src="/assets/js/vendor.js"></script>
   <script src="assets/js/search.js"></script>
-  <script src="/assets/js/home.js"></script>
   <script src="./assets/ultraviolet/uv.bundle.js"></script>
   <script src="./assets/ultraviolet/uv.config.js"></script>
   <script src="/assets/scramjet/scramjet.all.js"></script>
   <script src="/assets/scramjet/scramjet.config.js"></script>
-<script src="/assets/js/analytics.js"></script>
+  <script src="/assets/js/analytics.js"></script>
 </body>
 
 </html>
