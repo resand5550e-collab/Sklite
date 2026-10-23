@@ -524,12 +524,18 @@ body.tabs-vertical li {
 }
 
 .browser-logo {
-   display: block;
+   display: grid;
    flex: none;
-   width: auto;
-   height: 1.3rem;
-   margin: 0 0.45rem 0 0.45rem;
-   pointer-events: none;
+   width: 1.7rem;
+   height: 1.7rem;
+   margin: 0 0.45rem;
+   place-items: center;
+   border-radius: 5px;
+   background: linear-gradient(135deg, #9bcbff, #518fe0);
+   color: #091a2d;
+   font-size: 0.72rem;
+   font-weight: 900;
+   text-decoration: none;
    user-select: none;
 }
 

@@ -178,19 +178,12 @@ function createPinButton(appIndex) {
   pinIcon.ariaHidden = true;
 
   const button = document.createElement("button");
+  button.type = "button";
+  button.classList.add("pin-button");
   button.appendChild(pinIcon);
-  button.style.cssText = `
-    float: right;
-    cursor: pointer;
-    background-color: rgb(45,45,45);
-    border-radius: 50%;
-    border-color: transparent;
-    color: white;
-    top: -200px;
-    position: relative;
-  `;
   button.onclick = () => togglePin(appIndex);
   button.title = "Pin";
+  button.setAttribute("aria-label", "Pin");
 
   return button;
 }
@@ -210,9 +203,19 @@ function renderAppCard(app, appIndex, isCustom = false) {
   image.width = 145;
   image.height = 145;
   image.loading = "lazy";
+  image.decoding = "async";
+  image.alt = app.name;
+  image.onerror = () => {
+    image.onerror = null;
+    image.src = isGamesPage ? "/assets/media/icons/game-placeholder.svg" : "/assets/media/icons/custom.webp";
+    if (isGamesPage) image.classList.add("image-fallback");
+  };
 
   if (app.image) {
     image.src = app.image;
+  } else if (isGamesPage) {
+    image.src = "/assets/media/icons/game-placeholder.svg";
+    image.classList.add("image-fallback");
   } else {
     image.style.display = "none";
   }

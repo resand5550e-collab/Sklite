@@ -1,11 +1,12 @@
 .hero-shell {
-   --home-accent: #b9ed78;
-   --home-accent-soft: rgba(185, 237, 120, 0.12);
+   --home-accent: #70b2ff;
+   --home-accent-bright: #9acaff;
+   --home-accent-soft: rgba(90, 161, 245, 0.14);
    --home-line: color-mix(in srgb, var(--text) 10%, transparent);
    display: block;
    min-height: 100vh;
    overflow-x: hidden;
-   background: radial-gradient(ellipse at 50% 34%, color-mix(in srgb, var(--home-accent) 8%, transparent), transparent 42%), radial-gradient(ellipse at 90% 10%, rgba(66, 108, 92, 0.13), transparent 35%), var(--background);
+   background: radial-gradient(ellipse at 50% 27%, color-mix(in srgb, var(--home-accent) 22%, transparent), transparent 46%), radial-gradient(ellipse at 92% 8%, rgba(62, 126, 202, 0.24), transparent 38%), var(--background);
 }
 
 .hero-shell::after {
@@ -46,7 +47,7 @@
 .orbit-stars {
    fill: var(--home-accent);
    opacity: 0.5;
-   filter: drop-shadow(0 0 5px var(--home-accent));
+   filter: drop-shadow(0 0 4px color-mix(in srgb, var(--home-accent) 45%, transparent));
 }
 
 .hero-panel {
@@ -104,7 +105,8 @@
 }
 
 .title span {
-   color: var(--home-accent);
+   color: var(--home-accent-bright);
+   text-shadow: 0 8px 42px color-mix(in srgb, var(--home-accent) 16%, transparent);
 }
 
 .subtitle {
@@ -122,15 +124,22 @@
    min-height: 72px;
    margin-top: 42px;
    padding: 8px 10px 8px 22px;
-   border: 1px solid color-mix(in srgb, var(--home-accent) 20%, var(--home-line));
+   border: 1px solid color-mix(in srgb, var(--home-accent) 24%, var(--home-line));
    border-radius: 22px;
-   background: color-mix(in srgb, var(--background) 64%, #15201b);
+   background: color-mix(in srgb, var(--background) 72%, #14243a);
    box-shadow:
-      0 24px 80px rgba(0, 0, 0, 0.3),
-      inset 0 1px rgba(255, 255, 255, 0.035);
+      0 24px 80px rgba(0, 0, 0, 0.28),
+      inset 0 1px rgba(255, 255, 255, 0.045);
    -webkit-backdrop-filter: blur(20px);
    backdrop-filter: blur(20px);
    animation: arrive 700ms 100ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.search-container:focus-within {
+   border-color: color-mix(in srgb, var(--home-accent) 58%, transparent);
+   box-shadow:
+      0 24px 80px rgba(0, 0, 0, 0.28),
+      inset 0 1px rgba(255, 255, 255, 0.045);
 }
 
 #search-form {
@@ -143,7 +152,7 @@
 
 .search-icon {
    flex: 0 0 auto;
-   color: var(--home-accent);
+   color: color-mix(in srgb, var(--home-accent) 78%, var(--text));
    font-size: 16px;
 }
 
@@ -180,8 +189,8 @@
    place-items: center;
    border: 0;
    border-radius: 15px;
-   background: var(--home-accent);
-   color: #15200f;
+   background: linear-gradient(135deg, #8bc3ff, #5799ed);
+   color: #091a2d;
    cursor: pointer;
    font-size: 15px;
    transition:
@@ -192,8 +201,8 @@
 
 .search-submit:hover {
    transform: translateX(2px);
-   background: color-mix(in srgb, var(--home-accent) 84%, white);
-   box-shadow: 0 5px 22px color-mix(in srgb, var(--home-accent) 25%, transparent);
+   background: linear-gradient(135deg, #a5d0ff, #71adf7);
+   box-shadow: 0 5px 18px color-mix(in srgb, var(--home-accent) 18%, transparent);
 }
 
 .search-hint {
@@ -275,7 +284,7 @@ kbd {
    overflow: hidden;
    border: 1px solid var(--home-line);
    border-radius: 17px;
-   background: color-mix(in srgb, var(--text) 3%, transparent);
+   background: linear-gradient(145deg, color-mix(in srgb, var(--home-accent) 5%, var(--surface)), color-mix(in srgb, var(--text) 2%, var(--background)));
    color: var(--text);
    text-align: left;
    text-decoration: none;
@@ -291,16 +300,18 @@ kbd {
    position: absolute;
    inset: 0;
    pointer-events: none;
-   background: radial-gradient(circle at 0 0, var(--home-accent-soft), transparent 68%);
+   background: radial-gradient(circle at 0 0, color-mix(in srgb, var(--home-accent) 12%, transparent), transparent 68%);
    opacity: 0;
    transition: opacity var(--transition);
 }
 
 .quick-link:hover {
    transform: translateY(-3px);
-   border-color: color-mix(in srgb, var(--home-accent) 36%, transparent);
-   background: color-mix(in srgb, var(--text) 6%, transparent);
-   box-shadow: 0 16px 35px rgba(0, 0, 0, 0.17);
+   border-color: color-mix(in srgb, var(--home-accent) 42%, transparent);
+   background: linear-gradient(145deg, color-mix(in srgb, var(--home-accent) 9%, var(--surface)), color-mix(in srgb, var(--text) 3%, var(--background)));
+   box-shadow:
+      0 16px 35px rgba(0, 0, 0, 0.2),
+      0 0 24px color-mix(in srgb, var(--home-accent) 5%, transparent);
 }
 
 .quick-link:hover::before {
@@ -317,27 +328,31 @@ kbd {
    place-items: center;
    border: 1px solid color-mix(in srgb, var(--home-accent) 16%, transparent);
    border-radius: 13px;
-   background: var(--home-accent-soft);
+   background: linear-gradient(145deg, color-mix(in srgb, var(--home-accent) 19%, transparent), color-mix(in srgb, var(--home-accent) 8%, transparent));
    color: var(--home-accent);
    font-size: 16px;
 }
 
 .games-icon {
-   color: #d9b5ff;
-   border-color: rgba(217, 181, 255, 0.15);
-   background: rgba(217, 181, 255, 0.09);
+   color: #9bcaff;
+   border-color: rgba(112, 178, 255, 0.2);
+   background: rgba(112, 178, 255, 0.1);
 }
 
 .tabs-icon {
-   color: #8ed6e7;
-   border-color: rgba(142, 214, 231, 0.15);
-   background: rgba(142, 214, 231, 0.09);
+   color: #7bd7e7;
+   border-color: rgba(123, 215, 231, 0.18);
+   background: rgba(123, 215, 231, 0.09);
 }
 
 .chat-icon {
-   color: #ffbf8e;
-   border-color: rgba(255, 191, 142, 0.15);
-   background: rgba(255, 191, 142, 0.09);
+   width: 22px;
+   height: 42px;
+   border-color: transparent;
+   border-radius: 0;
+   background: transparent;
+   color: #8dbdff;
+   font-size: 18px;
 }
 
 .link-copy {
@@ -404,7 +419,7 @@ kbd {
 .hero-panel a:focus-visible,
 .search-submit:focus-visible,
 .truncate:focus-visible {
-   outline: 2px solid var(--home-accent);
+   outline: 2px solid color-mix(in srgb, var(--home-accent) 76%, white);
    outline-offset: 4px;
 }
 

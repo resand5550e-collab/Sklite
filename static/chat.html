@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="shortcut icon" id="tab-favicon" href="/assets/media/favicon/main.png" />
+    <title id="page-title">Community Chat | SKlite</title>
+    <link rel="stylesheet" href="/assets/css/global.css" />
+    <link rel="stylesheet" href="/assets/css/nav.css" />
+    <link rel="stylesheet" href="/assets/css/chat.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="/assets/js/storage.js"></script>
+    <script src="/assets/js/main.js"></script>
+</head>
+
+<body>
+    <div class="nav-bar"></div>
+    <main class="community-shell">
+        <section id="auth-view" class="auth-view" aria-labelledby="auth-title">
+            <div class="auth-heading">
+                <span class="eyebrow">SKLITE COMMUNITY</span>
+                <h1 id="auth-title">Community chat</h1>
+            </div>
+            <div class="auth-panel">
+                <div class="auth-tabs" role="tablist" aria-label="Account access">
+                    <button class="auth-tab is-active" type="button" role="tab" aria-selected="true"
+                        data-mode="login">Sign in</button>
+                    <button class="auth-tab" type="button" role="tab" aria-selected="false" data-mode="register">Create
+                        account</button>
+                </div>
+                <form id="auth-form" class="auth-form">
+                    <label for="auth-username">Username</label>
+                    <input id="auth-username" name="username" autocomplete="username" minlength="3" maxlength="24"
+                        required />
+                    <label for="auth-password">Password</label>
+                    <input id="auth-password" name="password" type="password" autocomplete="current-password"
+                        minlength="10" maxlength="128" required />
+                    <div id="email-field" class="form-field" hidden>
+                        <label for="auth-email">Email <span>(optional)</span></label>
+                        <input id="auth-email" name="email" type="email" autocomplete="email" maxlength="254" />
+                    </div>
+                    <button class="primary-button" type="submit"><i class="fa-solid fa-arrow-right-to-bracket"></i><span
+                            id="auth-submit-label">Sign in</span></button>
+                </form>
+                <p id="auth-error" class="status-message" role="status" aria-live="polite"></p>
+                <p class="account-note">Use a unique password for this account.</p>
+            </div>
+        </section>
+
+        <section id="chat-view" class="chat-view" hidden>
+            <header class="chat-topbar">
+                <div>
+                    <span class="eyebrow">SKLITE COMMUNITY</span>
+                    <h1>Community chat</h1>
+                </div>
+                <div class="account-tools">
+                    <span id="current-user" class="current-user"></span>
+                    <button id="signout-button" class="quiet-button" type="button" title="Sign out"><i
+                            class="fa-solid fa-arrow-right-from-bracket"></i><span>Sign out</span></button>
+                </div>
+            </header>
+
+            <form id="owner-claim-form" class="owner-claim" hidden>
+                <div><strong>Become the owner</strong><span>Enter the one-time setup code to claim owner access.</span>
+                </div>
+                <label class="visually-hidden" for="owner-code">Owner setup code</label>
+                <input id="owner-code" type="password" autocomplete="off" placeholder="Owner setup code" required />
+                <button class="quiet-button" type="submit">Claim owner</button>
+            </form>
+
+            <form id="admin-claim-form" class="owner-claim" hidden>
+                <div><strong>Become an admin</strong><span>Enter the admin setup code to claim moderator access.</span>
+                </div>
+                <label class="visually-hidden" for="admin-code">Admin setup code</label>
+                <input id="admin-code" type="password" autocomplete="off" placeholder="Admin setup code" required />
+                <button class="quiet-button" type="submit">Claim admin</button>
+            </form>
+
+            <div class="chat-layout">
+                <aside class="chat-sidebar">
+                    <section class="sidebar-section">
+                        <div class="section-heading">
+                            <h2>Channels</h2><span id="channel-count"></span>
+                        </div>
+                        <nav id="channel-list" class="channel-list" aria-label="Chat channels"></nav>
+                    </section>
+
+                    <form id="channel-form" class="owner-only owner-tools" hidden>
+                        <h2>New channel</h2>
+                        <label for="channel-name">Channel name</label>
+                        <input id="channel-name" maxlength="32" required />
+                        <label class="check-row"><input id="channel-private" type="checkbox" /><span>Private
+                                channel</span></label>
+                        <div id="channel-members-field" hidden>
+                            <label for="channel-members">Member usernames</label>
+                            <input id="channel-members" placeholder="name1, name2" />
+                        </div>
+                        <button class="quiet-button" type="submit"><i class="fa-solid fa-plus"></i><span>Create
+                                channel</span></button>
+                    </form>
+
+                    <section class="sidebar-section online-section">
+                        <div class="section-heading">
+                            <h2>Online</h2><span id="online-count">0</span>
+                        </div>
+                        <ul id="online-list" class="online-list"></ul>
+                    </section>
+
+                    <section id="moderation-panel" class="owner-only moderation-panel" hidden>
+                        <h2>Member tools</h2>
+                        <label for="moderation-user">Select member</label>
+                        <select id="moderation-user"></select>
+                        <div class="moderation-actions">
+                            <button class="quiet-button" type="button" data-moderation="kick"><i
+                                    class="fa-solid fa-person-walking-arrow-right"></i><span>Kick</span></button>
+                            <button class="quiet-button" type="button" data-moderation="timeout"><i
+                                    class="fa-regular fa-clock"></i><span>Timeout 5m</span></button>
+                            <button class="danger-button owner-only" type="button" data-moderation="ban" hidden><i
+                                    class="fa-solid fa-ban"></i><span>Ban</span></button>
+                            <button class="quiet-button owner-only" type="button" data-moderation="role" hidden><i
+                                    class="fa-solid fa-shield-halved"></i><span id="role-action-label">Make
+                                    admin</span></button>
+                            <button class="quiet-button owner-only" type="button" data-moderation="unban" hidden><i
+                                    class="fa-solid fa-rotate-left"></i><span>Unban</span></button>
+                        </div>
+                    </section>
+                </aside>
+
+                <section class="conversation" aria-label="Conversation">
+                    <header class="conversation-heading">
+                        <div>
+                            <span id="channel-kind" class="channel-kind">PUBLIC CHANNEL</span>
+                            <h2 id="active-channel">General</h2>
+                        </div>
+                        <button id="delete-channel" class="icon-button owner-only" type="button" title="Delete channel"
+                            hidden><i class="fa-solid fa-trash"></i></button>
+                    </header>
+                    <div id="chat-notice" class="chat-notice" role="status" aria-live="polite"></div>
+                    <div id="messages" class="messages" aria-live="polite" aria-relevant="additions"></div>
+                    <form id="message-form" class="message-form">
+                        <label class="visually-hidden" for="message-input">Message</label>
+                        <input id="message-input" maxlength="500" placeholder="Write a message" autocomplete="off"
+                            required />
+                        <button class="send-button" type="submit" title="Send message"><i
+                                class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                </section>
+            </div>
+
+            <p id="chat-error" class="status-message" role="status" aria-live="polite"></p>
+        </section>
+    </main>
+    <script src="/assets/js/chat.js"></script>
+</body>
+
+</html>

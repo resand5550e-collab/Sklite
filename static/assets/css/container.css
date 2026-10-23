@@ -6,7 +6,8 @@
       box-shadow 0.25s ease;
    cursor: pointer;
    background: var(--surface-tile);
-   border-radius: var(--radius-md);
+   border: 1px solid var(--border);
+   border-radius: 7px;
    padding-left: 10px;
    padding-right: 10px;
    padding-top: 5px;
@@ -35,12 +36,112 @@
 }
 
 .column:hover {
-   transform: translateY(-8px) scale(1.04);
-   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
+   transform: translateY(-5px);
+   border-color: var(--border-strong);
+   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
 }
 
 .column:hover .label {
    transform: translateX(-50%) scale(1.3);
+}
+
+.pin-button {
+   position: absolute;
+   top: 8px;
+   right: 8px;
+   display: grid;
+   width: 30px;
+   height: 30px;
+   place-items: center;
+   border: 1px solid var(--border);
+   border-radius: 50%;
+   background: color-mix(in srgb, var(--background) 76%, transparent);
+   color: var(--text);
+   cursor: pointer;
+   opacity: 0;
+   transition:
+      opacity var(--transition),
+      background var(--transition),
+      color var(--transition);
+}
+
+.column:hover .pin-button,
+.pin-button:focus-visible {
+   opacity: 1;
+}
+
+@media (hover: none) {
+   .pin-button {
+      opacity: 1;
+   }
+}
+
+.pin-button:hover {
+   background: var(--accent);
+   color: var(--accent-text);
+}
+
+.games-page .column {
+   box-sizing: border-box;
+   width: 166px;
+   padding: 10px;
+   overflow: hidden;
+   border-radius: 15px;
+   background: linear-gradient(155deg, color-mix(in srgb, var(--accent) 10%, var(--surface-tile)), var(--surface-tile) 68%);
+}
+
+.games-page .column:hover {
+   border-color: color-mix(in srgb, var(--accent) 48%, transparent);
+   box-shadow:
+      0 14px 30px rgba(0, 0, 0, 0.28),
+      0 0 20px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.games-page .column > a {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 9px;
+   color: var(--text);
+   text-decoration: none;
+}
+
+.games-page .column img {
+   position: static;
+   display: block;
+   width: 100%;
+   height: auto;
+   aspect-ratio: 1;
+   border: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+   border-radius: 10px;
+   background: color-mix(in srgb, var(--accent) 10%, var(--background));
+   object-fit: cover;
+}
+
+.games-page .column img.image-fallback {
+   padding: 26px;
+   box-sizing: border-box;
+   object-fit: contain;
+}
+
+.games-page .column p {
+   box-sizing: border-box;
+   width: 100%;
+   height: auto;
+   min-height: 2.4em;
+   margin: 0;
+   padding: 0 2px;
+   overflow: hidden;
+   font-size: 13px;
+   line-height: 1.2;
+   text-shadow: none;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 2;
+}
+
+.games-page .pin-button {
+   z-index: 1;
 }
 
 .apps {
@@ -61,12 +162,14 @@
 }
 
 input {
-   padding: 20px;
-   width: 550px;
-   border-radius: var(--radius-md);
+   padding: 0 16px;
+   width: min(520px, calc(100vw - 190px));
+   min-height: 46px;
+   box-sizing: border-box;
+   border-radius: 6px;
    background: var(--surface-input);
-   text-align: center;
-   font-size: 20px;
+   text-align: left;
+   font-size: 16px;
    border: 1px solid var(--border);
    outline: none;
    color: var(--text);
@@ -80,11 +183,12 @@ input:focus {
 }
 
 select {
-   padding: 20px;
-   border-radius: var(--radius-md);
+   padding: 0 14px;
+   min-height: 46px;
+   border-radius: 6px;
    background: var(--surface-input);
    color: var(--text);
-   font-size: 20px;
+   font-size: 14px;
    border: 1px solid var(--border);
    outline: none;
    cursor: pointer;
@@ -98,9 +202,35 @@ select:hover {
 
 .input-container {
    position: relative;
-   margin-top: 150px;
+   width: min(960px, calc(100% - 32px));
+   margin: 122px auto 0;
    display: flex;
    flex-wrap: wrap;
    justify-content: center;
-   gap: 0.5em;
+   gap: 8px;
+}
+
+.input-container input {
+   flex: 1 1 320px;
+   width: auto;
+   min-width: 0;
+}
+
+.input-container select {
+   flex: 0 1 180px;
+   max-width: 180px;
+}
+
+@media (max-width: 560px) {
+   .input-container select {
+      flex-basis: 118px;
+      max-width: 118px;
+      padding: 0 8px;
+   }
+
+   .apps,
+   .pinned {
+      gap: 12px;
+      padding: 0 12px;
+   }
 }

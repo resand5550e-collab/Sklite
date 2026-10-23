@@ -99,12 +99,6 @@
       }
     }
 
-    const isPastelTheme = String(themeId).startsWith("pastel");
-    const isLightTheme = ["light", "cream", "parchment", "latte"].includes(themeId);
-    const navLogo = document.getElementById("nav-logo");
-    if (navLogo) {
-      navLogo.src = isPastelTheme || !isLightTheme ? "/assets/media/favicon/main.png" : "/assets/media/favicon/main-inverted.png";
-    }
   }
 
   window.applyTheme = applyTheme;
@@ -301,17 +295,23 @@ document.addEventListener("DOMContentLoaded", () => {
   if (nav) {
     const themeId = store.get("theme");
     const lightThemes = ["light", "cream", "parchment", "latte"];
-    const isPastelTheme = String(themeId).startsWith("pastel");
-    const isLightTheme = lightThemes.includes(themeId);
-    const LogoUrl = isPastelTheme ? "/assets/media/favicon/main.png" : isLightTheme ? "/assets/media/favicon/main-inverted.png" : "/assets/media/favicon/main.png";
+    const currentPath = window.location.pathname || "/";
+    const links = [
+      { href: "/home", icon: "fa-house", label: "Home" },
+      { href: "/games", icon: "fa-gamepad", label: "Games" },
+      { href: "/chat", icon: "fa-comments", label: "Chat" },
+      { href: "/apps", icon: "fa-grid-2", label: "Apps" },
+      { href: "/settings", icon: "fa-gear", label: "Settings" },
+    ];
     const html = `
       <div id="icon-container">
-        <a class="icon" href="/home"><img alt="nav" id="nav-logo" src="${LogoUrl}"/></a>
+        <a class="icon" href="/home" aria-label="SKlite home"><span class="nav-mark">SK</span><span class="nav-wordmark">SKlite</span></a>
       </div>
       <div class="nav-bar-right">
-        <a class="navbar-link" href="/./games"><i class="fa-solid fa-gamepad navbar-icon"></i>${obfuscateNav("Games")}</a>
-        <a class="navbar-link" href="/./apps"><i class="fa-solid fa-phone navbar-icon"></i>${obfuscateNav("Apps")}</a>
-        <a class="navbar-link" href="/./settings"><i class="fa-solid fa-gear navbar-icon settings-icon"></i>${obfuscateNav("Settings")}</a>
+        ${links.map(({ href, icon, label }) => {
+          const active = currentPath === href || (href === "/home" && currentPath === "/");
+          return `<a class="navbar-link ${active ? "is-active" : ""}" href="${href}"><i class="fa-solid ${icon} navbar-icon"></i><span class="nav-label">${obfuscateNav(label)}</span></a>`;
+        }).join("")}
       </div>`;
     nav.innerHTML = html;
   }

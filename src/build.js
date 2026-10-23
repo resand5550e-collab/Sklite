@@ -5,7 +5,7 @@ import path from "node:path";
 import chalk from "chalk";
 import JavaScriptObfuscator from "javascript-obfuscator";
 import { minify } from "terser";
-import { injectVersionInfo, resolveVersionInfo, VERSION_TOKEN_COUNT } from "./version.js";
+import { DISPLAY_VERSION, injectVersionInfo, resolveVersionInfo, VERSION_TOKEN_COUNT } from "./version.js";
 
 const OBFUSCATOR_PROMO_PATTERN = /\[javascript-obfuscator\]|JavaScript Obfuscator Pro|obfuscator\.io/i;
 
@@ -374,7 +374,7 @@ function applyScramjetProtocolKeys(source, protocolKeys) {
 }
 
 const BAREMUX_STRING_DEFAULTS = ["bare-mux-worker-", "bare-mux-worker", "bare-mux-remote", "bare-mux-path", "bare-mux", "baremuxinit"];
-const BAREMUX_STRING_COUNTS = { "uv.bundle": 14, "uv.client": 17, "uv.handler": 1, "sj.all": 19, baremux: 17, "baremux.worker": 4 };
+const BAREMUX_STRING_COUNTS = { "uv.bundle": 14, "uv.client": 17, "uv.handler": 1, "sj.all": 19, baremux: 16, "baremux.worker": 4 };
 
 function createBaremuxStrings() {
   const token = randomBytes(4).toString("hex");
@@ -670,7 +670,7 @@ function applyProxyChoiceValues(source) {
 // server, and rewrites the clean route literals in the application JS so the navbar and every
 // in-app navigation point at the same opaque paths. "/" (root) and "/play.html" (a compatibility
 // alias for the games page) are deliberately left clean and are not part of this map.
-const PAGE_ROUTES = ["/apps", "/games", "/tabs", "/settings", "/home"];
+const PAGE_ROUTES = ["/apps", "/games", "/chat", "/tabs", "/settings", "/home"];
 
 function createPageRoutes(registry) {
   const map = {};
@@ -694,9 +694,11 @@ function createPageRoutes(registry) {
 function routeRewriteTable(routes) {
   return [
     [`"/./games"`, `"${routes["/games"]}"`],
+    [`"/./chat"`, `"${routes["/chat"]}"`],
     [`"/./apps"`, `"${routes["/apps"]}"`],
     [`"/./settings"`, `"${routes["/settings"]}"`],
     [`"/games"`, `"${routes["/games"]}"`],
+    [`"/chat"`, `"${routes["/chat"]}"`],
     [`"/apps"`, `"${routes["/apps"]}"`],
     [`"/settings"`, `"${routes["/settings"]}"`],
     [`"/tabs"`, `"${routes["/tabs"]}"`],
@@ -704,7 +706,7 @@ function routeRewriteTable(routes) {
     [`"tabs"`, `"${routes["/tabs"]}"`],
   ];
 }
-const ROUTE_REWRITE_COUNT = 16;
+const ROUTE_REWRITE_COUNT = 17;
 
 function applyRouteRewrites(source, table) {
   let count = 0;
@@ -1976,7 +1978,7 @@ async function build() {
   const WRAPPER_OPEN = /<(?:span|x-a|x-b|ab-x|s-p)>/g;
   const versionInfo = await resolveVersionInfo();
   let versionInjections = 0;
-  console.log(`Settings version card: ${versionInfo.version ? `v${versionInfo.version}` : "-"} / ${versionInfo.updated ?? "-"}`);
+  console.log(`Settings version card: ${DISPLAY_VERSION}`);
   console.log(`\nUpdating ${htmlFiles.length} HTML files${OBFUSCATE_HTML ? " + obfuscating" : ""}...\n`);
 
   await Promise.all(
@@ -2004,7 +2006,7 @@ async function build() {
       html = handlerAttrs.html;
       handlerHtmlCount += handlerAttrs.count;
 
-      if (name === "settings.html") {
+      if (name === "settings.html" || name === "home.html") {
         const injected = injectVersionInfo(html, versionInfo);
         html = injected.html;
         versionInjections += injected.count;
@@ -2038,7 +2040,8 @@ async function build() {
   */
   if (proxyChoiceHtml !== PROXY_CHOICE_COUNTS.html) throw new Error(`expected ${PROXY_CHOICE_COUNTS.html} proxy selector literals in HTML, replaced ${proxyChoiceHtml}. Update PROXY_CHOICE_COUNTS.`);
   if (handlerHtmlCount !== INLINE_HANDLER_HTML_COUNT) throw new Error(`expected ${INLINE_HANDLER_HTML_COUNT} inline-handler attributes in HTML, rewrote ${handlerHtmlCount}. Upstream changed.`);
-  if (versionInjections !== VERSION_TOKEN_COUNT) throw new Error(`expected ${VERSION_TOKEN_COUNT} version tokens injected into settings.html, injected ${versionInjections}. Upstream changed.`);
+  const expectedVersionInjections = VERSION_TOKEN_COUNT * 2;
+  if (versionInjections !== expectedVersionInjections) throw new Error(`expected ${expectedVersionInjections} version tokens injected into home.html and settings.html, injected ${versionInjections}. Upstream changed.`);
   for (const s of hardenStats.sort((a, b) => a.name.localeCompare(b.name))) console.log(`  text hardening: ${s.name} -> ${s.transformed}/${s.seen} nodes, ${s.wrappersAdded} wrappers`);
 
   //   if (analyticsIds.size > 1) throw new Error(`HTML pages disagree on the analytics id: ${[...analyticsIds].join(", ")}`);

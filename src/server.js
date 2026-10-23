@@ -9,9 +9,10 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import basicAuth from "express-basic-auth";
 import config from "../config.js";
+import { mountCommunityChat } from "./community-chat.js";
 // import { mountAnalytics } from "./analytics.js";
-import { mountGhGames } from "./games.js";
 import { createBlockVerdict, setupFiltering } from "./filtering/index.js";
+import { mountGhGames } from "./games.js";
 import { mountMasqr } from "./Masqr.js";
 import { injectVersionInfo, resolveVersionInfo } from "./version.js";
 
@@ -93,6 +94,7 @@ mountGhGames(app);
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+mountCommunityChat(app);
 
 const jsStaticOptions = {
   setHeaders: (res, filePath) => {
@@ -121,11 +123,15 @@ if (!vendorMap) {
   try {
     const info = await resolveVersionInfo();
     const settingsHtml = injectVersionInfo(readFileSync(path.join(SERVE_DIR, "settings.html"), "utf8"), info).html;
+    const homeHtml = injectVersionInfo(readFileSync(path.join(SERVE_DIR, "home.html"), "utf8"), info).html;
     const sendSettings = (_req, res) => res.type("html").send(settingsHtml);
+    const sendHome = (_req, res) => res.type("html").send(homeHtml);
     app.get("/settings", sendSettings);
     app.get("/settings.html", sendSettings);
+    app.get("/home", sendHome);
+    app.get("/home.html", sendHome);
   } catch (err) {
-    console.warn(chalk.yellow(`Settings version injection skipped, serving placeholders: ${err.message}`));
+    console.warn(chalk.yellow(`Page version injection skipped, serving placeholders: ${err.message}`));
   }
 }
 
@@ -148,6 +154,7 @@ if (!vendorMap) {
 const routes = [
   { path: "/apps", file: "apps.html" },
   { path: "/games", file: "games.html" },
+  { path: "/chat", file: "chat.html" },
   { path: "/play.html", file: "games.html" },
   { path: "/settings", file: "settings.html" },
   { path: "/tabs", file: "tabs.html" },

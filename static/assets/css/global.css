@@ -3,19 +3,19 @@
 
 :root {
    /* Surfaces */
-   --background: #222;
-   --surface: #2a2a2a;
-   --surface-card: #2a2a2a;
-   --surface-tile: #353535;
-   --surface-raised: #3a3a3a;
-   --surface-overlay: #2e2e2e;
-   --surface-input: #353535;
-   --surface-button: #333;
-   --surface-button-hover: #3d3d3d;
-   --surface-hover: #3a3a3a;
-   --surface-active: #444;
-   --surface-nav: rgba(255, 255, 255, 0.02);
-   --surface-nav-active: rgba(255, 255, 255, 0.06);
+   --background: #101d30;
+   --surface: #162741;
+   --surface-card: #162741;
+   --surface-tile: #1e304a;
+   --surface-raised: #263d5b;
+   --surface-overlay: #1b2f4a;
+   --surface-input: #1b2f4a;
+   --surface-button: #1b2f4a;
+   --surface-button-hover: #284363;
+   --surface-hover: #263d5b;
+   --surface-active: #304b6c;
+   --surface-nav: rgba(22, 39, 65, 0.86);
+   --surface-nav-active: rgba(79, 155, 247, 0.17);
 
    /* Borders */
    --border: rgba(255, 255, 255, 0.08);
@@ -28,9 +28,9 @@
    --text-faint: #555;
 
    /* Accent */
-   --accent: #fff;
-   --accent-hover: #fff;
-   --accent-text: #111;
+   --accent: #65aaff;
+   --accent-hover: #8bc0ff;
+   --accent-text: #081525;
 
    /* Status */
    --success: #4caf50;
@@ -43,9 +43,9 @@
    --toggle-knob: #fff;
 
    /* Tabs */
-   --tab: #2a2a2a;
-   --tab-active: #444;
-   --tab-hover: #444;
+   --tab: #162741;
+   --tab-active: #263d5b;
+   --tab-hover: #203650;
    --tab-border: transparent;
 
    /* Radius */
@@ -173,6 +173,24 @@ body[data-custom-background] {
    background-image: none;
 }
 
+.app-version {
+   position: fixed;
+   right: max(16px, env(safe-area-inset-right));
+   bottom: max(12px, env(safe-area-inset-bottom));
+   z-index: 110;
+   margin: 0;
+   padding: 5px 9px;
+   border: 1px solid rgba(112, 178, 255, 0.12);
+   border-radius: 8px;
+   background: rgba(12, 22, 36, 0.76);
+   color: color-mix(in srgb, var(--text) 58%, transparent);
+   font-size: 10px;
+   letter-spacing: 0.02em;
+   line-height: 1.3;
+   pointer-events: none;
+   -webkit-backdrop-filter: blur(10px);
+   backdrop-filter: blur(10px);
+}
 
 
 ::placeholder {

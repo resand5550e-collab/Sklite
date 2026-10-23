@@ -4,10 +4,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { inflateSync } from "node:zlib";
 
-const VERSION_TOKENS = [
-  ["{{VERSION}}", info => (info.version ? `v${info.version}` : "-")],
-  ["{{LAST_UPDATED}}", info => info.updated || "-"],
-];
+export const DISPLAY_VERSION = "1.6";
+
+const VERSION_TOKENS = [["{{VERSION}}", () => DISPLAY_VERSION]];
 export const VERSION_TOKEN_COUNT = VERSION_TOKENS.length;
 
 function escapeHtmlText(value) {

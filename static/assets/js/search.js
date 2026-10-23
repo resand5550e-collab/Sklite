@@ -152,7 +152,7 @@ async function navigate(value, path, proxyOverride) {
   const searchUrl = engine ? engine : "https://search.brave.com/search?q=";
 
   if (!isValidUrl(url)) {
-    url = searchUrl + url;
+    url = searchUrl + encodeURIComponent(url);
   } else if (!(url.startsWith("https://") || url.startsWith("http://"))) {
     url = `https://${url}`;
   }
@@ -190,7 +190,8 @@ function blank(value, proxyOverride) {
 }
 
 function isValidUrl(val = "") {
-  return /^http(s?):\/\//.test(val) || (val.includes(".") && val[0] !== " ");
+  const value = val.trim();
+  return /^https?:\/\//.test(value) || (!/\s/.test(value) && value.includes("."));
 }
 
 (() => {

@@ -1,5 +1,6 @@
 function isUrl(val = "") {
-  return /^http(s?):\/\//.test(val) || (val.includes(".") && val[0] !== " ");
+  const value = val.trim();
+  return /^https?:\/\//.test(value) || (!/\s/.test(value) && value.includes("."));
 }
 
 function prependHttps(url) {
@@ -359,7 +360,7 @@ window.addEventListener("load", () => {
   function toTargetUrl(raw) {
     const formValue = addressBar.stripZeroWidth(String(raw)).trim();
     const engine = store.get("engine") || "https://search.brave.com/search?q=";
-    return isUrl(formValue) ? prependHttps(formValue) : `${engine}${formValue}`;
+    return isUrl(formValue) ? prependHttps(formValue) : `${engine}${encodeURIComponent(formValue)}`;
   }
 
   window.addEventListener("message", event => {

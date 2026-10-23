@@ -83,6 +83,17 @@ npm i
 npm run start
 ```
 
+### Community Chat
+
+Build the app, then start it with the one-time owner claim code configured:
+
+```bash
+pnpm build
+CHAT_OWNER_CODE=1114Lite CHAT_ADMIN_CODE=1115Lite pnpm start
+```
+
+The first account to sign in and claim owner access becomes the owner. Admins sign in with their own account, then claim admin access with the configured admin code after the owner is set up. Set both codes in the hosting environment before deployment. Chat accounts and messages are stored in `data/community-chat.json` by default; production hosting must provide persistent storage for this file. Use `CHAT_DATA_PATH` to choose its location. This file-backed store is intended for a single persistent server instance.
+
 ### Updating
 
 ```bash
